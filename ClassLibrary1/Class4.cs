@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ClassLibrary1
 {
-    class Class4<T>
+    public class Class4<T>
     {
         MockUpListElement<T> firstElement;
 
@@ -39,6 +39,36 @@ namespace ClassLibrary1
 
         //    //goto index then insert
         //}
+        public void Remove(T _target)
+        {
+            MockUpListElement<T> curr = firstElement;
+            if (curr.value.ToString() == _target.ToString())
+            {
+                if (curr.nextElement != null)
+                {
+                    firstElement = curr.nextElement;
+                    return;
+                }
+                else
+                    firstElement = null;
+            }
+
+            while (curr.nextElement != null)
+            {
+                curr = curr.nextElement;
+
+                if (curr.value.ToString() == _target.ToString())
+                {
+                    if (curr.nextElement != null)
+                    {
+                        curr.nextElement = curr.nextElement.nextElement;
+                        return;
+                    }
+                    else
+                        curr.nextElement = null;
+                }
+            }
+        }
 
         public int Count()
         {
@@ -52,7 +82,14 @@ namespace ClassLibrary1
             }
 
             return cou;
+        }
 
+        public override string ToString()
+        {
+            if (firstElement != null)
+                return firstElement.ToString();
+            else
+                return "";
         }
     }
 
@@ -65,6 +102,14 @@ namespace ClassLibrary1
         public MockUpListElement(T _val)
         {
             value = _val;
+        }
+
+        public override string ToString()
+        {
+            if(nextElement == null)
+                return value.ToString();
+            else
+                return value.ToString() + " " + nextElement.ToString();
         }
     }
 }
