@@ -39,14 +39,68 @@ namespace ClassLibrary1
 
         //    //goto index then insert
         //}
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="_index">index of the list, start from 0</param>
+        /// <returns>value extracted</returns>
+        public T RemoveAt(int _index)
+        {
+            if (firstElement == null)
+                return default(T);
+
+            T tmpVal;
+            MockUpListElement<T> curr = firstElement;
+            MockUpListElement<T> previous = firstElement;
+
+            if (_index == 0)
+            {
+                tmpVal = firstElement.value;
+
+                if (firstElement.nextElement == null)
+                    firstElement = null;
+                else
+                    firstElement = firstElement.nextElement;
+
+                return tmpVal;
+            }
+
+            while (_index >= 0)
+            {
+                if (_index < 0)
+                    return default(T);
+
+                if (_index == 0)
+                {
+                    tmpVal = curr.value;
+                    if (curr.nextElement == null)
+                        previous.nextElement = null;//curr = null;
+                    else
+                        previous.nextElement = curr.nextElement; //curr = curr.nextElement;
+
+                    return tmpVal;
+                }
+
+                _index--;
+                previous = curr;
+                if (curr.nextElement == null)
+                    return default(T);
+                else
+                    curr = curr.nextElement;
+            }
+
+            return default(T);
+        }
+
         public void Remove(T _target)
         {
             MockUpListElement<T> curr = firstElement;
-            if (curr.value.ToString() == _target.ToString())
+            if (firstElement.value.ToString() == _target.ToString())
             {
                 if (curr.nextElement != null)
                 {
-                    firstElement = curr.nextElement;
+                    firstElement = firstElement.nextElement;
                     return;
                 }
                 else
